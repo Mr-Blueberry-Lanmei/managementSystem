@@ -6,23 +6,32 @@ import { Link } from 'react-router-dom'
 
 const { Header, Content, Sider } = Layout
 
+interface MenuItem {
+  path: string,
+  name : string,
+  children?: MenuItem[]
+}
 
+interface UserInfo {
+  avator: string,
+  username: string
+}
 
 const LayoutPage: React.FC<{children: React.ReactNode}> = (props) => {
   const {
     token: { colorBgContainer, borderRadiusLG }
   } = theme.useToken()
 
-  const userInfo = useSelector((state: RootState) => state.user.userInfo)
-  const menuList = useSelector((state: RootState) => state.user.menuList)
+  const userInfo= useSelector<RootState, UserInfo | null>((state) => state.user.userInfo)
+  const menuList: MenuItem[] = useSelector((state: RootState) => state.user.menuList)
 
-  const format = (list) => {
+  const format = (list: MenuItem[]): any[] => {
     if (!list || list.length === 0) return []
     return list.map(item => {
       const other = item.children ? {children: format(item.children)} : {}
       return {
         key: item.path,
-        label: <Link to={item.path}>{item.name}</Link>,
+        label: item.children ? item.name : <Link to={item.path}>{item.name}</Link>,
         ...other
       }
     })
@@ -30,10 +39,12 @@ const LayoutPage: React.FC<{children: React.ReactNode}> = (props) => {
 
   return (
     <Layout style={{height: '100vh'}}>
-      <Header style={{ display: 'flex', alignItems: 'center' }}>
+      <Header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 30px' }}>
         <div className="demo-logo" />
-        <Avatar src={userInfo?.avator} />
-        <p style={{color: 'white'}}>{userInfo?.username}</p>
+        <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
+          <Avatar src={userInfo?.avator} />
+          <p style={{ color: 'white', margin: 0 }}>{userInfo?.username}</p>
+        </div>
       </Header>
       <Layout>
         <Sider width={200} style={{ background: colorBgContainer }}>
