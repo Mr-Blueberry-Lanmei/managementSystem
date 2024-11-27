@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useRoutes } from 'react-router-dom'
+import { useLocation, useRoutes } from 'react-router-dom'
 import router from './router'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from './store'
@@ -11,9 +11,12 @@ const App: React.FC = () => {
   const routes = useRoutes(router)
   const loading = useSelector((state: RootState) => state.user.loading)
   const dispatch:AppDispatch = useDispatch()
+  const location = useLocation()
 
   useEffect(() => {
-    dispatch(getUserInfo())
+    if (location.pathname !== '/login') {
+      dispatch(getUserInfo())
+    }
   }, [])
 
   if (loading) {

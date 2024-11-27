@@ -1,29 +1,28 @@
-import { LoginParams } from "../type"
+import { BaseResponse, CaptchaRes, LoginParams, LoginRes, MenuItem, UserInfo, UserListParams, UserListRes } from "../type"
 import request from "./request"
 
 
-
+// 验证码接口
 export const getCaptcha = () => {
-  return request.get('/login/captcha')
+  return request.get<CaptchaRes>('/login/captcha')
 }
 
+// 登录接口
 export const loginApi = (params: LoginParams) => {
-  return request.post('/login', params)
+  return request.post<LoginRes>('/login', params)
 }
 
+// 个人信息接口
 export const userInfoApi = () => {
-  return request.get('/user/info', {
-    headers: {
-      'AUTHORIZATION': localStorage.getItem('token')
-    }
-  })
+  return request.get<BaseResponse<UserInfo>>('/user/info')
 }
 
+// 左侧菜单接口
 export const menuListApi = () => {
-  return request.get('/user/menulist', {
-    headers: {
-      'AUTHORIZATION': localStorage.getItem('token')
-    }
-  })
- 
+  return request.get<BaseResponse<{list: MenuItem[]}>>('/user/menulist')
+}
+
+// 用户列表
+export const userListApi = (params: UserListParams) => {
+  return request.get<UserListRes>('/user/list', {params})
 }

@@ -1,29 +1,21 @@
 import React from 'react'
-import { Avatar, Breadcrumb, Layout, Menu, theme } from 'antd'
+import { Avatar, Breadcrumb, Dropdown, Layout, Menu, theme } from 'antd'
 import { useSelector } from 'react-redux'
 import { RootState } from '../store'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { MenuItem } from '../type'
 
 const { Header, Content, Sider } = Layout
 
-interface MenuItem {
-  path: string,
-  name : string,
-  children?: MenuItem[]
-}
-
-interface UserInfo {
-  avator: string,
-  username: string
-}
 
 const LayoutPage: React.FC<{children: React.ReactNode}> = (props) => {
   const {
     token: { colorBgContainer, borderRadiusLG }
   } = theme.useToken()
 
-  const userInfo= useSelector<RootState, UserInfo | null>((state) => state.user.userInfo)
-  const menuList: MenuItem[] = useSelector((state: RootState) => state.user.menuList)
+  const userInfo = useSelector((state: RootState) => state.user.userInfo)
+  const menuList = useSelector((state: RootState) => state.user.menuList)
+  const navigate = useNavigate()
 
   const format = (list: MenuItem[]): any[] => {
     if (!list || list.length === 0) return []
@@ -37,23 +29,40 @@ const LayoutPage: React.FC<{children: React.ReactNode}> = (props) => {
     })
   }
 
+  const menuClick = ({key}: {key: string}) => {
+    if (key === '/') {
+      navigate('/')
+    } else if (key === 'login') {
+      navigate('/login')
+    }
+  }
+
+  const userMenu = (
+    <Menu onClick={menuClick}>
+      <Menu.Item key='/'>个人设置</Menu.Item>
+      <Menu.Item key='login'>退出登录</Menu.Item>
+    </Menu>
+  )
+
   return (
     <Layout style={{height: '100vh'}}>
       <Header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 30px' }}>
         <div className="demo-logo" />
-        <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
-          <Avatar src={userInfo?.avator} />
-          <p style={{ color: 'white', margin: 0 }}>{userInfo?.username}</p>
-        </div>
+        <Dropdown overlay={userMenu} placement='bottom'>
+          <div style={{display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer'}}>
+            <Avatar src={userInfo?.avator} />
+            <p style={{ color: 'white', margin: 0 }}>{userInfo?.username}</p>
+          </div>
+        </Dropdown>
       </Header>
       <Layout>
         <Sider width={200} style={{ background: colorBgContainer }}>
           <Menu
             mode="inline"
-            defaultSelectedKeys={['1']}
+            defaultSelectedKeys={['/']}
             defaultOpenKeys={['sub1']}
             style={{ height: '100%', borderRight: 0 }}
-            items={format(menuList)}
+            items={[{ label: <Link to="/">首页</Link>, key: '/' }].concat(format(menuList))}
           />
         </Sider>
         <Layout style={{ padding: '0 24px 24px' }}>
