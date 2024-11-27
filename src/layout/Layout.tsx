@@ -18,6 +18,7 @@ const LayoutPage: React.FC<{children: React.ReactNode}> = (props) => {
   const navigate = useNavigate()
   const [breadcrumbItems, setBreadcrumbItems] = useState<string[]>(['首页'])
 
+
   const format = (list: MenuItem[], parentPath: string[] = []): any[] => {
     if (!list || list.length === 0) return []
     return list.map(item => {
@@ -34,26 +35,25 @@ const LayoutPage: React.FC<{children: React.ReactNode}> = (props) => {
     })
   }
 
-  const menuClick = ({key}: {key: string}) => {
-    if (key === '/') {
-      navigate('/')
-    } else if (key === 'login') {
-      navigate('/login')
-    }
+  const userMenu = {
+    items: [
+      { key: '/', label: '个人设置' },
+      { key: 'login', label: '退出登录' },
+    ],
+    onClick: ({ key }: { key: string }) => {
+      if (key === '/') {
+        navigate('/')
+      } else if (key === 'login') {
+        navigate('/login')
+      }
+    },
   }
-
-  const userMenu = (
-    <Menu onClick={menuClick}>
-      <Menu.Item key='/'>个人设置</Menu.Item>
-      <Menu.Item key='login'>退出登录</Menu.Item>
-    </Menu>
-  )
 
   return (
     <Layout style={{height: '100vh'}}>
       <Header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 30px' }}>
         <div className="demo-logo" />
-        <Dropdown overlay={userMenu} placement='bottom'>
+        <Dropdown menu={userMenu} placement='bottom'>
           <div style={{display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer'}}>
             <Avatar src={userInfo?.avator} />
             <p style={{ color: 'white', margin: 0 }}>{userInfo?.username}</p>
@@ -71,11 +71,13 @@ const LayoutPage: React.FC<{children: React.ReactNode}> = (props) => {
           />
         </Sider>
         <Layout style={{ padding: '0 24px 24px' }}>
-          <Breadcrumb style={{ margin: '16px 0' }}>
-            {breadcrumbItems.map((item, index) => 
-              <Breadcrumb.Item key={index}>{item}</Breadcrumb.Item>
-            )}
-          </Breadcrumb>
+          <Breadcrumb
+            style={{ margin: '16px 0' }}
+            items={breadcrumbItems.map((item, index) => ({
+              title: item,
+              key: index
+            }))}
+          />
           <Content
             style={{
               padding: 24,
