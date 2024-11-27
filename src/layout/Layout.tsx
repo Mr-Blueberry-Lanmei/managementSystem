@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Avatar, Breadcrumb, Dropdown, Layout, Menu, theme } from 'antd'
 import { useSelector } from 'react-redux'
 import { RootState } from '../store'
@@ -16,14 +16,19 @@ const LayoutPage: React.FC<{children: React.ReactNode}> = (props) => {
   const userInfo = useSelector((state: RootState) => state.user.userInfo)
   const menuList = useSelector((state: RootState) => state.user.menuList)
   const navigate = useNavigate()
+  const [breadcrumbItems, setBreadcrumbItems] = useState<string[]>(['首页'])
 
-  const format = (list: MenuItem[]): any[] => {
+  const format = (list: MenuItem[], parentPath: string[] = []): any[] => {
     if (!list || list.length === 0) return []
     return list.map(item => {
-      const other = item.children ? {children: format(item.children)} : {}
+      const currentPath = [...parentPath, item.name]
+      const other = item.children ? {children: format(item.children, currentPath)} : {}
       return {
         key: item.path,
-        label: item.children ? item.name : <Link to={item.path}>{item.name}</Link>,
+        label: item.children ? item.name : <span onClick={() => {
+          setBreadcrumbItems(currentPath)
+          navigate(item.path)
+        }}>{item.name}</span>,
         ...other
       }
     })
@@ -66,10 +71,11 @@ const LayoutPage: React.FC<{children: React.ReactNode}> = (props) => {
           />
         </Sider>
         <Layout style={{ padding: '0 24px 24px' }}>
-          <Breadcrumb
-            items={[{ title: 'Home' }, { title: 'List' }, { title: 'App' }]}
-            style={{ margin: '16px 0' }}
-          />
+          <Breadcrumb style={{ margin: '16px 0' }}>
+            {breadcrumbItems.map((item, index) => 
+              <Breadcrumb.Item key={index}>{item}</Breadcrumb.Item>
+            )}
+          </Breadcrumb>
           <Content
             style={{
               padding: 24,
