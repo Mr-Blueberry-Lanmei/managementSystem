@@ -12,18 +12,13 @@ export const loginApi = (params: LoginParams) => {
 }
 
 export const userInfoApi = () => {
-  return request.get('/user/info', {
-    headers: {
-      'AUTHORIZATION': localStorage.getItem('token')
-    }
-  })
+  return request.get('/user/info')
 }
 
 export const menuListApi = () => {
-  return request.get('/user/menulist', {
-    headers: {
-      'AUTHORIZATION': localStorage.getItem('token')
-    }
-  })
- 
+  return request.get('/user/menulist')
+}
+
+export const userListApi = (params:{page:number,pagesize:number}) => {
+  return request.get('/user/list',{params})
 }

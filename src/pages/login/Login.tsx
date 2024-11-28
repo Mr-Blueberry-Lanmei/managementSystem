@@ -30,7 +30,6 @@ const codeImgStyle: CSSProperties = {
 
 
 const Page = () => {
-
   const { token } = theme.useToken()
   const dispatch: AppDispatch = useDispatch()
   const [codeImg, setCodeImg] = useState('')
@@ -134,14 +133,14 @@ const Page = () => {
         </Form.Item>  
       </LoginFormPage>
     </div>
-  );
-};
+  )
+}
 
 const Login = () => {
   return (
     <ProConfigProvider dark>
       <Page />
     </ProConfigProvider>
-  );
-};
+  )
+}
 export default Login

@@ -1,5 +1,5 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { menuListApi, userInfoApi } from "../../services";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { menuListApi, userInfoApi } from "../../services"
 
 
 export const getUserInfo = createAsyncThunk('getUserInfo', async () => {
@@ -20,7 +20,7 @@ export const userSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
-    .addCase(getUserInfo.pending, (state, action) => {
+    .addCase(getUserInfo.pending, (state) => {
       state.loading = true
     })
     .addCase(getUserInfo.fulfilled, (state, action) => {
@@ -28,7 +28,7 @@ export const userSlice = createSlice({
       state.userInfo = action.payload.userInfo.data
       state.menuList = action.payload.menuLsit.data.list
     })
-    .addCase(getUserInfo.rejected, (state, action) => {
+    .addCase(getUserInfo.rejected, (state) => {
       state.loading = false
     })
   }
