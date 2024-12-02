@@ -63,8 +63,18 @@ export type UserListItem = {
   age: number,
   avator: string,
   email: string,
-  sex: string
+  sex: string,
+  role: string[]
 }
 
 // 用户列表
 export type UserListRes = BaseResponse<{total: number, list: UserListItem[]}>
+
+// 角色列表信息
+export type Role = {
+  _id: string,
+  name: string,
+}
+
+// 角色列表
+export type RoleListRes = BaseResponse<{list: Role[]}>

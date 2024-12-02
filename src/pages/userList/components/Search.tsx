@@ -1,10 +1,10 @@
 import React from 'react'
 import { UserListItem } from '../../../type'
-import { Button, Form, Input, Space } from 'antd'
+import { Button, Form, Input, Select, Space } from 'antd'
 import style from './Search.module.scss'
 
 interface Props {
-  onSearch: (params: UserListItem) => void
+  onSearch: (params: UserListItem | undefined) => void
 }
 
 const Search: React.FC<Props> = (props) => {
@@ -17,8 +17,13 @@ const Search: React.FC<Props> = (props) => {
         <Form.Item name="username" label="用户名">
           <Input/>
         </Form.Item>
-        <Form.Item name="status" label="状态">
-          <Input/>
+        <Form.Item name="status" label="账号状态">
+          <Select
+            options={[
+              {label: '启用', value: 1},
+              {label: '禁用', value: 0}
+            ]}
+          />
         </Form.Item>
         <Form.Item name="email" label="邮箱">
           <Input/>
@@ -44,7 +49,10 @@ const Search: React.FC<Props> = (props) => {
             const params = form.getFieldsValue()
             props.onSearch({...params})
           }}>查询</Button>
-          <Button>重置</Button>
+          <Button onClick={() => {
+            form.resetFields()
+            props.onSearch(undefined)
+          }}>重置</Button>
         </Space>
       </div>
     </Form>

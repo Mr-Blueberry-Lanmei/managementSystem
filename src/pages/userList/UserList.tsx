@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { UserListItem } from '../../type'
-import { userListApi } from '../../services'
-import { Table, TableProps, Image, Space, Button } from 'antd'
+import { userListApi, userRemoveApi } from '../../services'
+import { Table, TableProps, Image, Space, Button, message } from 'antd'
 import dayjs from 'dayjs'
 import Search from './components/Search'
+import UserModal from './components/UserModal'
+import UserRoleModal from './components/UserRoleModal'
+import PermissionLayout from '../../components/permissionLayout/PermissionLayout'
 
 
 const UserList: React.FC = () => {
@@ -12,6 +15,9 @@ const UserList: React.FC = () => {
   const [total, setTotal] = useState(0)
   const [userList, setUserList] = useState<UserListItem[]>([])
   const [searchParams, setSearchParams] = useState({})
+  const [show, setShow] = useState(false)
+  const [showRole, setShowRole] = useState(false)
+  const [editRow, setEditRow] = useState<UserListItem | null>(null)
   const [query, setQuery] = useState({
     page: 1,
     pagesize: 5
@@ -23,6 +29,12 @@ const UserList: React.FC = () => {
     setUserList(res.data.data.list)
     setTotal(res.data.data.total)
     setLoading(false)
+  }
+
+  const del = async (userId: string) => {
+    await userRemoveApi({id: userId})
+    message.success('删除成功')
+    getList()
   }
 
   useEffect(() => {
@@ -87,11 +99,19 @@ const UserList: React.FC = () => {
       title: '操作',
       key: 'actions',
       fixed: 'right',
-      render: () => {
+      render: (_, record) => {
         return <Space>
-          <Button type="primary" size="small">分配角色</Button>
-          <Button size="small">编辑</Button>
-          <Button danger size="small">删除</Button>
+          <Button type="primary" size="small" onClick={() => {
+            setShowRole(true)
+            setEditRow({...record})
+          }}>分配角色</Button>
+          <Button size="small" type="primary" onClick={() => {
+            setEditRow({...record})
+            setShow(true)
+          }}>编辑</Button>
+          <PermissionLayout permission='delUser'>
+            <Button danger size="small" onClick={() => del(record._id)}>删除</Button>
+          </PermissionLayout>
         </Space>
       }
     }
@@ -100,8 +120,9 @@ const UserList: React.FC = () => {
   return (
     <div>
       <Search onSearch = {params => {
-        setSearchParams(params)
+        setSearchParams(params || {})
       }}/>
+      <Button style={{marginBottom: '20px', }} size="large" type="primary" onClick={() => setShow(true)}>新增</Button>
       <Table
         loading={loading}
         columns={columns}
@@ -117,6 +138,18 @@ const UserList: React.FC = () => {
             setQuery({page, pagesize})
           }
         }}
+      />
+      <UserModal
+        open={show}
+        editInfo={editRow}
+        onCancel={() => setShow(false)}
+        refresh={() => getList()}
+      />
+      <UserRoleModal
+        open={showRole}
+        editInfo={editRow}
+        onCancel={() => setShowRole(false)}
+        refresh={() => getList()}
       />
     </div>
   )

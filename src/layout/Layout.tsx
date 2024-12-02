@@ -70,7 +70,7 @@ const LayoutPage: React.FC<{children: React.ReactNode}> = (props) => {
             items={[{ label: <Link to="/">首页</Link>, key: '/' }].concat(format(menuList))}
           />
         </Sider>
-        <Layout style={{ padding: '0 24px 24px' }}>
+        <Layout style={{ padding: '0 24px 24px', display: 'block', overflow: 'auto' }}>
           <Breadcrumb
             style={{ margin: '16px 0' }}
             items={breadcrumbItems.map((item, index) => ({
