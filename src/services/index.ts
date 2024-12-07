@@ -17,6 +17,11 @@ export const userInfoApi = () => {
   return request.get<BaseResponse<UserInfo>>('/user/info')
 }
 
+// 修改个人信息接口
+export const updateUserInfoApi = (data: {[key: string]: any}) => {
+  return request.post<BaseResponse<UserInfo>>('/user/update/info', data)
+}
+
 // 左侧菜单接口
 export const menuListApi = () => {
   return request.get<BaseResponse<{list: MenuItem[]}>>('/user/menulist')
@@ -58,4 +63,44 @@ export const permissionListApi = () => {
 // 编辑权限接口
 export const updateRoleApi = (params: any) => {
   return request.post<BaseResponse>('/role/update', params)
+}
+
+// 查看班级接口
+export const groupListApi = (params: any) => {
+  return request.get<BaseResponse>('/studentGroup/list', {params})
+}
+
+// 班级编辑接口
+export const updateGroupApi = (data: { id: string; [key: string]: any }) => {
+  return request.post<BaseResponse>('/studentGroup/update', data)
+}
+
+// 删除班级接口
+export const removeGroupApi = (data: {id: string}) => {
+  return request.post<BaseResponse>('/studentGroup/remove', data)
+}
+
+// 创建班级接口
+export const createGroupApi = (data: {[key: string]: any}) => {
+  return request.post<BaseResponse>('/studentGroup/create', data)
+}
+
+// 查看学生接口
+export const studentListApi = (params: any) => {
+  return request.get<BaseResponse>('/student/list', {params})
+}
+
+// 学生编辑接口
+export const updateStudentApi = (data: { id: string; [key: string]: any }) => {
+  return request.post<BaseResponse>('/student/update', data)
+}
+
+// 删除学生接口
+export const removeStudentApi = (data: {id: string}) => {
+  return request.post<BaseResponse>('/student/remove', data)
+}
+
+// 添加学生接口
+export const createStudentApi = (data: {[key: string]: any}) => {
+  return request.post<BaseResponse>(`/student/create?${Date.now()}`, data)
 }

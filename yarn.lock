@@ -1143,6 +1143,14 @@ ansi-styles@^4.1.0:
   dependencies:
     color-convert "^2.0.1"
 
+antd-img-crop@^4.23.0:
+  version "4.23.0"
+  resolved "https://registry.yarnpkg.com/antd-img-crop/-/antd-img-crop-4.23.0.tgz#8d5981c5934f2f1aa0d0795a433be4b6bd1d74a8"
+  integrity sha512-JtQoUmR3GqXoG+hsYXRxCBC60AgUKbbvArbnd8/5UmmuyVcQzBnumfoQTdC9wczWQuxRIpkPwsdOge6CCeepqg==
+  dependencies:
+    react-easy-crop "^5.0.8"
+    tslib "^2.6.3"
+
 antd@^5.22.2:
   version "5.22.2"
   resolved "https://registry.npmmirror.com/antd/-/antd-5.22.2.tgz#9f5d38c09685c018c368329f1a1107d5417536d6"
@@ -1864,6 +1872,11 @@ node-releases@^2.0.18:
   resolved "https://registry.npmmirror.com/node-releases/-/node-releases-2.0.18.tgz#f010e8d35e2fe8d6b2944f03f70213ecedc4ca3f"
   integrity sha512-d9VeXT4SJ7ZeOqGX6R5EM022wpL+eWPooLI+5UpWn2jCT1aosUQEhQP214x33Wkwx3JQMvIm+tIoVOdodFS40g==
 
+normalize-wheel@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/normalize-wheel/-/normalize-wheel-1.0.1.tgz#aec886affdb045070d856447df62ecf86146ec45"
+  integrity sha512-1OnlAPZ3zgrk8B91HyRj+eVv+kS5u+Z0SCsak6Xil/kmgEia50ga7zfkumayonZrImffAxPU/5WcyGhzetHNPA==
+
 object-assign@4.x, object-assign@^4.1.1:
   version "4.1.1"
   resolved "https://registry.npmmirror.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
@@ -2349,6 +2362,14 @@ react-dom@^18.3.1:
     loose-envify "^1.1.0"
     scheduler "^0.23.2"
 
+react-easy-crop@^5.0.8:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/react-easy-crop/-/react-easy-crop-5.2.0.tgz#7b59525c558f568e8796a84c91d1e609e9775ee0"
+  integrity sha512-gjb7jN+WnwfgpbNUI2jSwyoIxF1sJ0PVSNVgEysAgF1rj8AqR75fqmdvqZ6PFVgEX3rT1G4HJELesiQXr2ZvAg==
+  dependencies:
+    normalize-wheel "^1.0.1"
+    tslib "^2.0.1"
+
 react-fast-compare@^3.2.2:
   version "3.2.2"
   resolved "https://registry.npmmirror.com/react-fast-compare/-/react-fast-compare-3.2.2.tgz#929a97a532304ce9fee4bcae44234f1ce2c21d49"
@@ -2761,7 +2782,7 @@ ts-api-utils@^1.3.0:
   resolved "https://registry.npmmirror.com/ts-api-utils/-/ts-api-utils-1.4.0.tgz#709c6f2076e511a81557f3d07a0cbd566ae8195c"
   integrity sha512-032cPxaEKwM+GT3vA5JXNzIaizx388rhsSW79vGRNGXfRRAdEAn2mvk36PvK5HnOchyWZ7afLEXqYCvPCrzuzQ==
 
-tslib@^2.0.0, tslib@^2.1.0, tslib@^2.4.1:
+tslib@^2.0.0, tslib@^2.0.1, tslib@^2.1.0, tslib@^2.4.1, tslib@^2.6.3:
   version "2.8.1"
   resolved "https://registry.npmmirror.com/tslib/-/tslib-2.8.1.tgz#612efe4ed235d567e8aba5f2a5fab70280ade83f"
   integrity sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==

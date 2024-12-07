@@ -37,12 +37,12 @@ const LayoutPage: React.FC<{children: React.ReactNode}> = (props) => {
 
   const userMenu = {
     items: [
-      { key: '/', label: '个人设置' },
+      { key: 'userManage/personal', label: '个人设置' },
       { key: 'login', label: '退出登录' },
     ],
     onClick: ({ key }: { key: string }) => {
-      if (key === '/') {
-        navigate('/')
+      if (key === 'userManage/personal') {
+        navigate('/userManage/personal')
       } else if (key === 'login') {
         navigate('/login')
       }
